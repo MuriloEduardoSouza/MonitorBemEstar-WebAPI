@@ -9,7 +9,7 @@ Este projeto consiste em uma API desenvolvida em ASP.NET Core, que permite ao us
 
 A API oferece também filtros inteligentes para que o usuário visualize sua produtividade tanto na semana atual quanto no mês atual.
 
-# 🚀 Tecnologias utilizadas
+## 🚀 Tecnologias utilizadas
 ✅ ASP.NET Core MVC
 
 ✅ C#
@@ -20,7 +20,7 @@ A API oferece também filtros inteligentes para que o usuário visualize sua pro
 
 ✅ REST API
 
-# 🏗️ Funcionalidades
+## 🏗️ Funcionalidades
 📄 Registro diário de:
 
 Horas de uso do celular
@@ -31,7 +31,7 @@ Humor no dia
 
 Data do registro
 
-# 🔍 Filtros por:
+## 🔍 Filtros por:
 
 Semana atual
 
@@ -41,8 +41,8 @@ Mês atual
 
  🔐 Autenticação de usuários
 
-# 🔧 Instalação e execução
-# ✔️ Pré-requisitos:
+## 🔧 Instalação e execução
+## ✔️ Pré-requisitos:
 .NET SDK (versão 7.0 ou superior)
 
 PostgreSQL instalado e rodando
@@ -52,7 +52,7 @@ Visual Studio ou Visual Studio Code
 Git instalado
 
 
-# 📡 Endpoints principais
+## 📡 Endpoints principais
 Método	Endpoint	Descrição
 POST	/api/registrodiario	Criar novo registro diário
 GET	/api/registrodiario	Listar registros do usuário
@@ -61,12 +61,12 @@ GET	/api/registrodiario/mes	Filtro do mês atual
 PATCH	/api/registrodiario/{id}	Atualizar um registro
 DELETE	/api/registrodiario/{id}	Remover um registro
 
-# 🛠️ Futuras melhorias
+## 🛠️ Futuras melhorias
 Dashboard com gráficos
 
 Front-end integrado (em desenvolvimento)
 
 Notificações de produtividade
 
-🤝 Contribuição
+## 🤝 Contribuição
 Contribuições são bem-vindas! Sinta-se livre para abrir Issues ou Pull Requests.
