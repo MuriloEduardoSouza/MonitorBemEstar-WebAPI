@@ -1,0 +1,6 @@
+@MonitorBemEstar.webAPI_HostAddress = http://localhost:5003
+
+GET {{MonitorBemEstar.webAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

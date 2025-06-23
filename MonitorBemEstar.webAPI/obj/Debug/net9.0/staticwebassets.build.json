@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "n+n+MBaeennrjWwCLJApO1JhiYw0dp49lIomSCCQj2U=",
+  "Source": "MonitorBemEstar.webAPI",
+  "BasePath": "_content/MonitorBemEstar.webAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
