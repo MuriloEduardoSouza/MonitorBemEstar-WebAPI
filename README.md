@@ -1,11 +1,11 @@
 ## 📊 Monitor de Bem-Estar Digital
 Este projeto consiste em uma API desenvolvida em ASP.NET Core, que permite ao usuário registrar dados sobre sua produtividade diária, incluindo:
 
-# ⏳ Horas de uso do celular
+ ⏳ Horas de uso do celular
 
-# 🎯 Tipo de atividade realizada
+ 🎯 Tipo de atividade realizada
 
-# 😊 Nível de humor no dia
+ 😊 Nível de humor no dia
 
 A API oferece também filtros inteligentes para que o usuário visualize sua produtividade tanto na semana atual quanto no mês atual.
 
@@ -37,9 +37,9 @@ Semana atual
 
 Mês atual
 
-# 👤 Controle por usuário (cada usuário tem seus próprios dados registrados)
+ 👤 Controle por usuário (cada usuário tem seus próprios dados registrados)
 
-# 🔐 Autenticação de usuários
+ 🔐 Autenticação de usuários
 
 # 🔧 Instalação e execução
 # ✔️ Pré-requisitos:
