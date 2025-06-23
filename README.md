@@ -1,4 +1,4 @@
-### 📊 Monitor de Bem-Estar Digital
+# 📊 Monitor de Bem-Estar Digital
 Este projeto consiste em uma API desenvolvida em ASP.NET Core, que permite ao usuário registrar dados sobre sua produtividade diária, incluindo:
 
  ⏳ Horas de uso do celular
