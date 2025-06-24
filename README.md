@@ -52,15 +52,6 @@ Visual Studio ou Visual Studio Code
 Git instalado
 
 
-## 📡 Endpoints principais
-Método	Endpoint	Descrição
-POST	/api/registrodiario	Criar novo registro diário
-GET	/api/registrodiario	Listar registros do usuário
-GET	/api/registrodiario/semana	Filtro da semana atual
-GET	/api/registrodiario/mes	Filtro do mês atual
-PATCH	/api/registrodiario/{id}	Atualizar um registro
-DELETE	/api/registrodiario/{id}	Remover um registro
-
 ## 🛠️ Futuras melhorias
 Dashboard com gráficos
 
