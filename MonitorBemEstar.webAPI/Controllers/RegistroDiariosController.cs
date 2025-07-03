@@ -20,7 +20,8 @@ namespace MonitorBemEstar.webAPI.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RegistroDiario>>> GetRegistroDiarios()
         {
@@ -37,6 +38,29 @@ namespace MonitorBemEstar.webAPI.Controllers
                 .ToListAsync();
 
             return registros;
+        }
+
+        [Authorize] 
+        [HttpGet("meu/{id}")]
+        public async Task<ActionResult<RegistroDiario>> GetMeuRegistroDiario(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(new { message = "ID de usuário não encontrado no token." });
+            }
+
+            var registro = await _context.RegistroDiarios
+                                         .Where(r => r.Id == id && r.UserId == userId) 
+                                         .FirstOrDefaultAsync();
+
+            if (registro == null)
+            {
+                return NotFound(new { message = "Registro não encontrado ou você não tem permissão para acessá-lo." });
+            }
+
+            return Ok(registro); 
         }
 
         [Authorize]
@@ -109,7 +133,7 @@ namespace MonitorBemEstar.webAPI.Controllers
             var registros = await registrosQuery.ToListAsync();
 
             if (!registros.Any())
-                return Ok("Nenhum registro encontrado no período selecionado.");
+                return Ok(new List<object>());
 
             var resultado = registros
                 .GroupBy(itemLista => itemLista.DataRegistro.Date)
@@ -133,8 +157,8 @@ namespace MonitorBemEstar.webAPI.Controllers
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
             DateTime hoje = DateTime.Today;
-            DateTime dataSemana = hoje.AddDays(-7);
-            DateTime dataMes = new DateTime(hoje.Year, hoje.Month, 1);
+            DateTime dataSemana = hoje.AddDays(-7).ToUniversalTime();
+            DateTime dataMes = new DateTime(hoje.Year, hoje.Month, 1).ToUniversalTime();
       
             var horasSemana = await _context.RegistroDiarios
                 .Where(itemLista => itemLista.UserId == userId && itemLista.DataRegistro >= dataSemana)
@@ -174,10 +198,13 @@ namespace MonitorBemEstar.webAPI.Controllers
             var registros = await registrosQuery.ToListAsync();
 
             if (!registros.Any())
-                return Ok("Nenhum registro encontrado no período selecionado.");
+                return Ok(new List<object>());
 
 
             var resultado = registros
+
+           
+
                 .GroupBy(itemLista => itemLista.Humor)
                 .Select(grupoFormado => new
                 {
@@ -188,12 +215,12 @@ namespace MonitorBemEstar.webAPI.Controllers
 
             return Ok(resultado);
         }
-        
+
         [Authorize]
         [HttpGet("relatorio/atividades")]
         public async Task<IActionResult> GetRelatorioAtividades(
-            [FromQuery] DateTime? dataInicio,
-            [FromQuery] DateTime? dataFim)
+            [FromQuery] string? dataInicioStr,
+            [FromQuery] string? dataFimStr)
         {
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
@@ -201,16 +228,32 @@ namespace MonitorBemEstar.webAPI.Controllers
             var registrosQuery = _context.RegistroDiarios
                 .Where(itemLista => itemLista.UserId == userId);
 
-            if (dataInicio.HasValue)
-                registrosQuery = registrosQuery.Where(itemLista => itemLista.DataRegistro.Date >= dataInicio.Value.Date);
+            DateTime inicioUtc;
+            if (!string.IsNullOrEmpty(dataInicioStr) && DateTime.TryParse(dataInicioStr, out inicioUtc))
+            {
+                inicioUtc = DateTime.SpecifyKind(inicioUtc.Date, DateTimeKind.Local).ToUniversalTime();
+                registrosQuery = registrosQuery.Where(itemLista => itemLista.DataRegistro >= inicioUtc);
+            }
+            else
+            {
+                inicioUtc = DateTime.MinValue;
+            }
 
-            if (dataFim.HasValue)
-                registrosQuery = registrosQuery.Where(itemLista => itemLista.DataRegistro.Date <= dataFim.Value.Date);
+            DateTime fimUtc;
+            if (!string.IsNullOrEmpty(dataFimStr) && DateTime.TryParse(dataFimStr, out fimUtc))
+            {
+                fimUtc = DateTime.SpecifyKind(fimUtc.Date.AddDays(1), DateTimeKind.Local).ToUniversalTime();
+                registrosQuery = registrosQuery.Where(itemLista => itemLista.DataRegistro < fimUtc);
+            }
+            else
+            {
+                fimUtc = DateTime.MinValue;
+            }
 
-            var registros = await registrosQuery.ToListAsync();
+                var registros = await registrosQuery.ToListAsync();
 
             if (!registros.Any())
-                return Ok("Nenhum registro encontrado no filtro selecionado.");
+                return Ok(new List<object>());
 
             var resultado = registros
                 .GroupBy(itemLista => itemLista.TipoAtividade)
@@ -228,16 +271,27 @@ namespace MonitorBemEstar.webAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<RegistroDiario>> PostRegistroDiario([FromBody] RegistroDiario input)
         {
-            var userId = User.FindFirst("sub")?.Value;
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(new { message = "ID de usuário não encontrado no token. Requisição inválida ou token inválido/expirado." });
+            }
+
+            if (input == null)
+                return BadRequest(new{ message = "Corpo da requisição inválido."});
 
             RegistroDiario registro = new()
             {
                 HorasCelular = input.HorasCelular,
-                DataRegistro = input.DataRegistro,
+                DataRegistro = DateTime.SpecifyKind(input.DataRegistro.Date, DateTimeKind.Local).ToUniversalTime(),
                 Humor = input.Humor,
                 TipoAtividade = input.TipoAtividade,
                 UserId = userId
             };
+
+            if (registro == null)
+                return BadRequest("Dados inválidos");
 
             _context.RegistroDiarios.Add(registro);
             await _context.SaveChangesAsync();
@@ -260,13 +314,13 @@ namespace MonitorBemEstar.webAPI.Controllers
                 return Forbid("Você não tem permissão para editar este registro.");
      
             registro.HorasCelular = input.HorasCelular;
-            registro.DataRegistro = input.DataRegistro;
+            registro.DataRegistro = DateTime.SpecifyKind(input.DataRegistro.Date, DateTimeKind.Local).ToUniversalTime();
             registro.Humor = input.Humor;
             registro.TipoAtividade = input.TipoAtividade;
 
             await _context.SaveChangesAsync();
 
-            return Ok(registro);
+            return Ok(new { message = "Registro atualizado com sucesso!" });
         }
 
         [Authorize]
@@ -283,11 +337,15 @@ namespace MonitorBemEstar.webAPI.Controllers
             if (registro.UserId != userId)
                 return Forbid("Você não tem permissão para alterar este registro.");
 
+            if (input == null)
+                return BadRequest("Corpo da requisição está vazio ou mal formatado.");
+
+
             if (input.HorasCelular.HasValue)
                 registro.HorasCelular = input.HorasCelular.Value;
 
             if (input.DataRegistro.HasValue)
-                registro.DataRegistro = input.DataRegistro.Value;
+                registro.DataRegistro = DateTime.SpecifyKind(input.DataRegistro.Value, DateTimeKind.Utc);
 
             if (input.Humor.HasValue)
                 registro.Humor = input.Humor.Value;
@@ -322,7 +380,7 @@ namespace MonitorBemEstar.webAPI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
+        [HttpDelete("DeleteAdmin/{id}")]
         public async Task<IActionResult> DeleteRegistro(int id)
         {
             RegistroDiario? registro = await _context.RegistroDiarios.FindAsync(id);

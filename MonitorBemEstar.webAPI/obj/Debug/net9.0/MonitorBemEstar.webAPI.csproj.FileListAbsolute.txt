@@ -289,7 +289,7 @@ C:\xampp\htdocs\Projetos Pessoais\MonitorBemEstar\MonitorBemEstar.webAPI\Monitor
 C:\xampp\htdocs\Projetos Pessoais\MonitorBemEstar\MonitorBemEstar.webAPI\MonitorBemEstar.webAPI\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.MonitorBemEstar.webAPI.props
 C:\xampp\htdocs\Projetos Pessoais\MonitorBemEstar\MonitorBemEstar.webAPI\MonitorBemEstar.webAPI\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.MonitorBemEstar.webAPI.props
 C:\xampp\htdocs\Projetos Pessoais\MonitorBemEstar\MonitorBemEstar.webAPI\MonitorBemEstar.webAPI\obj\Debug\net9.0\staticwebassets.pack.json
-C:\xampp\htdocs\Projetos Pessoais\MonitorBemEstar\MonitorBemEstar.webAPI\MonitorBemEstar.webAPI\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\xampp\htdocs\Projetos Pessoais\MonitorBemEstar\MonitorBemEstar.webAPI\MonitorBemEstar.webAPI\obj\Debug\net9.0\MonitorB.D269AA3C.Up2Date
 C:\xampp\htdocs\Projetos Pessoais\MonitorBemEstar\MonitorBemEstar.webAPI\MonitorBemEstar.webAPI\obj\Debug\net9.0\MonitorBemEstar.webAPI.genruntimeconfig.cache
 C:\xampp\htdocs\Projetos Pessoais\MonitorBemEstar\MonitorBemEstar.webAPI\MonitorBemEstar.webAPI\obj\Debug\net9.0\ref\MonitorBemEstar.webAPI.dll
+C:\xampp\htdocs\Projetos Pessoais\MonitorBemEstar\MonitorBemEstar.webAPI\MonitorBemEstar.webAPI\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

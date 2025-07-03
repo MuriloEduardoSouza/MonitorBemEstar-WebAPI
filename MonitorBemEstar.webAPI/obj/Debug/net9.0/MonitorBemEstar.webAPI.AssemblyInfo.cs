@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MonitorBemEstar.webAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a8125d20d6cbf07a32f72f9d3204478a8350a87")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7712e3d420f629c49de4d5d28a02044ebd189656")]
 [assembly: System.Reflection.AssemblyProductAttribute("MonitorBemEstar.webAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MonitorBemEstar.webAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using MonitorBemEstar.webAPI.Models;
 using MonitorBemEstar.webAPI.Services;
 using MonitorBemEstar.webAPI.User;
@@ -14,16 +18,18 @@ namespace MonitorBemEstar.webAPI.Controllers
         private readonly UserManager<Usuario> _userManager;
         private readonly SignInManager<Usuario> _signInManager;
         private readonly TokenService _tokenService;
+        private readonly IConfiguration _configuration;
 
-        public AccountsController(UserManager<Usuario> userManager, SignInManager<Usuario> signInManager, TokenService tokenService)
+        public AccountsController(UserManager<Usuario> userManager, SignInManager<Usuario> signInManager, TokenService tokenService, IConfiguration configuration  )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
+            _configuration = configuration;
         }
 
         [AllowAnonymous]
-        [HttpPost("register")]
+        [HttpPost("/register")]
         public async Task<IActionResult> Register([FromBody] RegistrarUsuarioInputModel input)
         {
             var user = new Usuario
@@ -46,26 +52,41 @@ namespace MonitorBemEstar.webAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginInputModel input)
+        [HttpPost("/login")]
+        public async Task<IActionResult> Login([FromBody] LoginInputModel login)
         {
-            var user = await _userManager.FindByEmailAsync(input.Email);
+            var user = await _userManager.FindByEmailAsync(login.Email);
+            if (user == null || !await _userManager.CheckPasswordAsync(user, login.Senha))
+                return Unauthorized("Usuário ou senha inválidos.");
 
-            if (user == null)
-                return Unauthorized("Usuário não encontrado.");
+            var claims = new[]
+            {
+        new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim(ClaimTypes.NameIdentifier, user.Id),
+        new Claim(ClaimTypes.Email, user.Email)
+    };
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, input.Senha, false);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("minhaChaveSuperSecreta1234567890ABCDEF"));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            if (!result.Succeeded)
-                return Unauthorized("Email ou senha inválidos.");
+            var token = new JwtSecurityToken(
+                issuer: _configuration ["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.Now.AddHours(1),
+                signingCredentials: creds
+            );
 
-            var token = _tokenService.GenerateToken(user);
-
-            return Ok(new { Token = token });
+            return Ok(new
+            {
+                token = new JwtSecurityTokenHandler().WriteToken(token),
+                expiracao = token.ValidTo
+            });
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpPost("register-admin")]
+        [HttpPost("/register-admin")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegistrarAdminInputModel input)
         {
             var user = new Usuario
@@ -84,7 +105,10 @@ namespace MonitorBemEstar.webAPI.Controllers
 
             await _userManager.AddToRoleAsync(user, "Admin");
 
-            return Ok(new { message = "Administrador criado com sucesso!" });
+            var token = _tokenService.GenerateToken(user);
+
+            return Ok(new { message = "Administrador criado com sucesso!",
+            token = token});
         }
     }
 }

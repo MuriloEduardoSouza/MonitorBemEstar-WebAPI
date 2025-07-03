@@ -1,53 +1,5 @@
 [
   {
-    "ContainingType": "MonitorBemEstar.webAPI.Controllers.AccountsController",
-    "Method": "Login",
-    "RelativePath": "api/Accounts/login",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "input",
-        "Type": "MonitorBemEstar.webAPI.User.LoginInputModel",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "MonitorBemEstar.webAPI.Controllers.AccountsController",
-    "Method": "Register",
-    "RelativePath": "api/Accounts/register",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "input",
-        "Type": "MonitorBemEstar.webAPI.User.RegistrarUsuarioInputModel",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "MonitorBemEstar.webAPI.Controllers.AccountsController",
-    "Method": "RegisterAdmin",
-    "RelativePath": "api/Accounts/register-admin",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "input",
-        "Type": "MonitorBemEstar.webAPI.User.RegistrarAdminInputModel",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "MonitorBemEstar.webAPI.Controllers.RegistroDiariosController",
     "Method": "GetRegistroDiarios",
     "RelativePath": "api/registro-diarios",
@@ -96,7 +48,7 @@
   {
     "ContainingType": "MonitorBemEstar.webAPI.Controllers.RegistroDiariosController",
     "Method": "DeleteRegistro",
-    "RelativePath": "api/registro-diarios/{id}",
+    "RelativePath": "api/registro-diarios/DeleteAdmin/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -108,6 +60,32 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MonitorBemEstar.webAPI.Controllers.RegistroDiariosController",
+    "Method": "GetMeuRegistroDiario",
+    "RelativePath": "api/registro-diarios/meu/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "MonitorBemEstar.webAPI.Models.RegistroDiario",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "MonitorBemEstar.webAPI.Controllers.RegistroDiariosController",
@@ -196,13 +174,13 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dataInicio",
-        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Name": "dataInicioStr",
+        "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "dataFim",
-        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Name": "dataFimStr",
+        "Type": "System.String",
         "IsRequired": false
       }
     ],
@@ -341,12 +319,96 @@
   },
   {
     "ContainingType": "MonitorBemEstar.webAPI.Controllers.UsuariosController",
+    "Method": "GetCurrentUser",
+    "RelativePath": "api/usuarios/me",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "MonitorBemEstar.webAPI.Models.Usuario",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MonitorBemEstar.webAPI.Controllers.UsuariosController",
+    "Method": "UpdateCurrentUser",
+    "RelativePath": "api/usuarios/me",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "MonitorBemEstar.webAPI.User.UserProfileInputModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MonitorBemEstar.webAPI.Controllers.UsuariosController",
     "Method": "GetUsuarios",
     "RelativePath": "api/usuarios/usuarios",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MonitorBemEstar.webAPI.Controllers.AccountsController",
+    "Method": "Login",
+    "RelativePath": "login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "login",
+        "Type": "MonitorBemEstar.webAPI.User.LoginInputModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MonitorBemEstar.webAPI.Controllers.AccountsController",
+    "Method": "Register",
+    "RelativePath": "register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "MonitorBemEstar.webAPI.User.RegistrarUsuarioInputModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MonitorBemEstar.webAPI.Controllers.AccountsController",
+    "Method": "RegisterAdmin",
+    "RelativePath": "register-admin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "MonitorBemEstar.webAPI.User.RegistrarAdminInputModel",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   }
 ]

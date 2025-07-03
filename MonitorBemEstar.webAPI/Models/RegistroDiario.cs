@@ -9,7 +9,7 @@ namespace MonitorBemEstar.webAPI.Models
         public int Id { get; set; }
 
         [Required]
-        public double? HorasCelular { get; set; }
+        public double HorasCelular { get; set; }
 
         [Required]
         public DateTime DataRegistro { get; set; }

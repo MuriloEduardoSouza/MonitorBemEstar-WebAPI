@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MonitorBemEstar.webAPI.Context;
 using MonitorBemEstar.webAPI.Models;
 using MonitorBemEstar.webAPI.User;
+using System.Security.Claims;
 
 namespace MonitorBemEstar.webAPI.Controllers
 {
@@ -20,11 +22,13 @@ namespace MonitorBemEstar.webAPI.Controllers
             _userManager = userManager;
         }
 
+
         [Authorize(Roles = "Admin")]
         [HttpGet("usuarios")]
         public async Task<IActionResult> GetUsuarios()
         {
-            var usuarios = _userManager.Users.ToList();
+
+            var usuarios =  _userManager.Users.ToList();
             return Ok(usuarios);
         }
 
@@ -40,8 +44,30 @@ namespace MonitorBemEstar.webAPI.Controllers
             return usuario;
         }
 
+        [HttpGet("me")] 
+        [Authorize] 
+        public async Task<ActionResult<Usuario>> GetCurrentUser()
+        {
+        
+        var userEmail = User.FindFirstValue(ClaimTypes.Email);
 
-        [HttpPost]
+        if (string.IsNullOrEmpty(userEmail))
+        {
+                return Unauthorized(new { message = "Email do usuário não encontrado no token. Certifique-se de que o token é válido e possui a claim de Email." });
+            }
+
+        Usuario? usuario = await _userManager.FindByEmailAsync(userEmail);
+
+        if (usuario == null)
+        {
+                return NotFound(new { message = "Usuário não encontrado." });
+            }
+
+        return Ok(usuario); 
+    }
+
+
+    [HttpPost]
         public async Task<ActionResult> CriarUsuario([FromBody] RegistrarUsuarioInputModel input)
         {
             Usuario usuario = new ()
@@ -61,6 +87,39 @@ namespace MonitorBemEstar.webAPI.Controllers
 
             return Ok(usuario);
         }
+
+        [Authorize]
+        [HttpPut("me")]
+        public async Task<IActionResult> UpdateCurrentUser([FromBody] UserProfileInputModel input)
+        {
+            var userEmailFromToken = User.FindFirstValue(ClaimTypes.Email);
+
+            if(string.IsNullOrEmpty(userEmailFromToken))
+            {
+                return Unauthorized(new { message = "ID de usuário não encontrado no token." });
+            }
+
+            var user = await _userManager.FindByEmailAsync(userEmailFromToken);
+
+            if (user == null)
+            {
+                return NotFound(new {message = "Usuário não encontrado no sistema."});
+            }
+
+            user.NomeCompleto = input.NomeCompleto;
+            user.Idade = input.Idade;
+            user.Endereco = input.Endereco;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return Ok(new { message = "Perfil atualizado com sucesso." });
+        }
+        
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]

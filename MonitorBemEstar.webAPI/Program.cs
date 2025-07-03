@@ -56,6 +56,8 @@ builder.Services.AddIdentity<Usuario, IdentityRole>()
     .AddDefaultTokenProviders();
 
 // Autenticação com JWT
+Console.WriteLine("JWT Key (debug): " + builder.Configuration["Jwt:Key"]);
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -77,6 +79,17 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 // Criação automática das Roles (Admin, Usuario)
@@ -93,7 +106,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+
+//app.UseHttpsRedirection();
+app.UseCors("AllowFrontend");
+
 
 app.UseAuthentication();
 app.UseAuthorization();
