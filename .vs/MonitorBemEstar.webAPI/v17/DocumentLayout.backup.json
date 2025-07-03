@@ -1,0 +1,62 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\xampp\\htdocs\\Projetos Pessoais\\MonitorBemEstar\\MonitorBemEstar.webAPI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7C40AD17-DC34-45B0-BB07-877761D1C8D1}|MonitorBemEstar.webAPI\\MonitorBemEstar.webAPI.csproj|c:\\xampp\\htdocs\\projetos pessoais\\monitorbemestar\\monitorbemestar.webapi\\monitorbemestar.webapi\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7C40AD17-DC34-45B0-BB07-877761D1C8D1}|MonitorBemEstar.webAPI\\MonitorBemEstar.webAPI.csproj|solutionrelative:monitorbemestar.webapi\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7C40AD17-DC34-45B0-BB07-877761D1C8D1}|MonitorBemEstar.webAPI\\MonitorBemEstar.webAPI.csproj|c:\\xampp\\htdocs\\projetos pessoais\\monitorbemestar\\monitorbemestar.webapi\\monitorbemestar.webapi\\user\\userprofileinputmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7C40AD17-DC34-45B0-BB07-877761D1C8D1}|MonitorBemEstar.webAPI\\MonitorBemEstar.webAPI.csproj|solutionrelative:monitorbemestar.webapi\\user\\userprofileinputmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UsuariosController.cs",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\Projetos Pessoais\\MonitorBemEstar\\MonitorBemEstar.webAPI\\MonitorBemEstar.webAPI\\Controllers\\UsuariosController.cs",
+              "RelativeDocumentMoniker": "MonitorBemEstar.webAPI\\Controllers\\UsuariosController.cs",
+              "ToolTip": "C:\\xampp\\htdocs\\Projetos Pessoais\\MonitorBemEstar\\MonitorBemEstar.webAPI\\MonitorBemEstar.webAPI\\Controllers\\UsuariosController.cs",
+              "RelativeToolTip": "MonitorBemEstar.webAPI\\Controllers\\UsuariosController.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAcwG4AAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-29T13:20:23.133Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserProfileInputModel.cs",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\Projetos Pessoais\\MonitorBemEstar\\MonitorBemEstar.webAPI\\MonitorBemEstar.webAPI\\User\\UserProfileInputModel.cs",
+              "RelativeDocumentMoniker": "MonitorBemEstar.webAPI\\User\\UserProfileInputModel.cs",
+              "ToolTip": "C:\\xampp\\htdocs\\Projetos Pessoais\\MonitorBemEstar\\MonitorBemEstar.webAPI\\MonitorBemEstar.webAPI\\User\\UserProfileInputModel.cs",
+              "RelativeToolTip": "MonitorBemEstar.webAPI\\User\\UserProfileInputModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T23:19:01.487Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

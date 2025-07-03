@@ -1,0 +1,35 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.sdf
+*.cache
+*.dbmdl
+*.pdb
+
+# Build output
+bin/
+obj/
+TestResults/
+*.log
+
+# ASP.NET generated files
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Rider
+.idea/
+
+# Node (caso tenha React ou frontend JS)
+node_modules/
+dist/
+build/
+
+# Sistema
+*.DS_Store
+Thumbs.db
+
+# SQLite
+*.sqlite
+*.sqlite3
